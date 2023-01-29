@@ -66,7 +66,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('backend.users.edit', compact('user'));
     }
 
     /**
@@ -78,7 +79,15 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->is_admin = $request->is_admin;
+        $user->status = $request->status ?? 1;
+        $user->save();
+        return redirect('/users');
+
     }
 
     /**
@@ -89,7 +98,10 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+        return redirect('/users');
+
 
     }
 }

@@ -33,22 +33,24 @@
                         <td>{{ $user->id; }}</td>
                         <td>{{ $user->name; }}</td>
                         <td>{{ $user->email; }}</td>
-                        <td>{{ $user->active; }}</td>
+                        <td>{{ $user->status; }}</td>
                         <td>
 
 
                             <ul class="nav float-start">
 
                                 <li class="nav-item">
-                                    <a href="{{ route('users.edit',$user->id) }}" class="nav-link">
-                                        <span>Edit</span>
+                                    <a href="{{ route('users.edit',$user->id) }}">
+                                        <button class="btn btn-warning">Edit</button>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{url("/users/$user->id")}}" class="nav-link">
-                                        <span>Delete</span>
-                                    </a>
+                                   <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                       @method('DELETE')
+                                       @csrf
+                                       <button class="btn btn-danger" type="submit">Delete</button>
+                                    </a></form>
 
                                 </li>
                                 <li class="nav-item">
