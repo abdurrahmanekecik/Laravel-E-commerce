@@ -54,7 +54,7 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/users" class="nav-link">
+                                    <a href="{{url("/users/$user->id/change-password")}}" class="nav-link">
                                         <span>Password Change</span>
                                     </a>
 

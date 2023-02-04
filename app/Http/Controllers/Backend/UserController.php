@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -35,12 +37,12 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password = $request->Hash::make($password);;
         $user->is_admin = $request->is_admin;
         $user->status = $request->status ?? 1;
         $user->save();
@@ -77,7 +79,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UserRequest $request, $id)
     {
         $user = User::find($id);
         $user->name = $request->name;
@@ -104,4 +106,47 @@ class UserController extends Controller
 
 
     }
+
+
+    /**
+     * PasswordForm the form for changing a password resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function passwordForm(User $user){
+
+        return view('backend.users.password',["user"=>$user]);
+    }
+
+    /**
+     * PasswordForm the form for changing a password post.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function changePassword(User $user, Request $request)
+    {
+      $password = $request->get("password");
+        $user->password = Hash::make($password);
+        $user->save();
+        return redirect('/users');
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

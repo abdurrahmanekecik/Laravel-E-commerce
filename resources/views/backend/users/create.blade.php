@@ -22,7 +22,10 @@
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label >E-mail</label>
-                        <input type="email" class="form-control"  name="email" placeholder="name@example.com">
+                        <input type="email" class="form-control"  name="email" placeholder="name@example.com" value="{{old("email")}}">
+                        @error("email")
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                 </div>
                 </div>
@@ -35,7 +38,7 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label >Repeat Password</label>
+                            <label>Repeat Password</label>
                             <input type="password" class="form-control" name="password2" >
                         </div>
                     </div>
