@@ -29,7 +29,7 @@ class AddressController extends Controller
      */
     public function create()
     {
-        //
+        return view('backend.address.create');
     }
 
     /**
@@ -40,7 +40,7 @@ class AddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //
     }
 
     /**
