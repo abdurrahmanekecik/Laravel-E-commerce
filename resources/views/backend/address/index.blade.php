@@ -1,5 +1,5 @@
 @extends('backend.app')
-@section('tittle', 'Users')
+@section('tittle', 'Address İndex')
 @section('content')
 
 
@@ -7,10 +7,10 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Admin Panel</h1>
             </div>
-            <h2>Users</h2>
+            <h2>Address</h2>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <a href="{{ route('users.create') }}" class="btn btn-sm btn-outline-danger">New Add</a>
+                    <a href="{{ route('users.create') }}" class="btn btn-sm btn-outline-danger">New Adds</a>
                 </div>
             </div>
 
