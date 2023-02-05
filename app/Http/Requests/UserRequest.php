@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
         return [
             "name" => "required|min:3",
             "email" => "required|email|unique:App\Models\User,email,$id",
-            //"password" => "required|sometimes|string|min:5|confirmed",
+            "password" => "required|sometimes|string|min:5|confirmed",
 
         ];
     }
