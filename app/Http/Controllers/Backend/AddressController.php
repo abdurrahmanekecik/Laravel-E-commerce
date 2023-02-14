@@ -18,8 +18,9 @@ class AddressController extends Controller
      */
     public function index(User $user)
 
-    { $addrs = $user->addrs;
-        return view('backend.address.index' , compact('addrs'));
+    {
+        $addrs = $user->addrs;
+        return view('backend.address.index' , compact('addrs', 'user'));
 
     }
 
@@ -30,7 +31,7 @@ class AddressController extends Controller
      */
     public function create(User $user)
     { $addrs = $user->addrs;
-        return view('backend.address.create', compact('addrs') );
+        return view('backend.address.create', compact('addrs', 'user'));
     }
 
     /**
@@ -39,12 +40,18 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(User $user, AddressRequest $request)
+    public function store(User $user, Request $request)
     {
-       $addr = new Address();
-       $data = $this->prepare($request, $addr->getFillable());
-       $addr->fill($data);
-       $addr->save();
+
+        $addr = new Address();
+
+        $addr->user_id = $request->user_id;
+        $addr->city = $request->city;
+        $addr->district	 = $request->district;
+        $addr->zipcode = $request->zipcode;
+        $addr->address = $request->address;
+        $addr->is_default = $request->is_default ?? 1;
+        $addr->save();
         return redirect('/users');
     }
 
@@ -77,11 +84,16 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user, Address $address, AddressRequest $request)
+    public function update(User $user, Address $address, Request $request)
     {
-        $data=$this->prepare($request, $address->getfillable());
-        $address->fill($data);
-        $address->save();
+        $addr = Address::find($address->id);
+        $addr->user_id = $request->user_id;
+        $addr->city = $request->city;
+        $addr->district	 = $request->district;
+        $addr->zipcode = $request->zipcode;
+        $addr->address = $request->address;
+        $addr->is_default = $request->is_default ?? 1;
+        $addr->save();
         return redirect('/users');
 
     }
@@ -92,10 +104,11 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Address $address)
+    public function destroy(User $user, Address $address)
     {
+        $address= Address::find($address->id);
         $address->delete();
-        return response()->json(["message"=>"Done","id"=>$address->address_id]);
+        return redirect('/users');
 
     }
 }

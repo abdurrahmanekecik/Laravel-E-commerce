@@ -1,5 +1,5 @@
 @extends('backend.app')
-@section('tittle', 'Users Create')
+@section('tittle', 'Address Create')
 @section('content')
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -10,20 +10,28 @@
 
 
 
-            <form method="POST" action="{{url("/users")}}">
+        <form action="{{url("/users/$user->id/address")}}" method="POST" autocomplete="off" novalidate>
                 @csrf
+                <input type="hidden" name="user_id" value="{{$user->id}}">
+                @error("user_id")
+                <span class="text-danger">{{$message}}</span>
+                @enderror
+
                 <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label >Name Surname</label>
-                        <input type="text" class="form-control" name="name" placeholder="name@example.com">
+                        <label >City</label>
+                        <input type="text" class="form-control" name="city" placeholder="City">
+                        @error("city")
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label >E-mail</label>
-                        <input type="email" class="form-control"  name="email" placeholder="name@example.com" value="{{old("email")}}">
-                        @error("email")
+                        <label >District</label>
+                        <input type="text" class="form-control"  name="district" placeholder="District" value="{{old("district")}}">
+                        @error("district")
                         <span class="text-danger">{{$message}}</span>
                         @enderror
                     </div>
@@ -32,23 +40,27 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label >Password</label>
-                            <input type="password" class="form-control" name="password" ">
+                            <label >Zipcode</label>
+                            <input type="text" class="form-control" name="zipcode">
+                            @error("zipcode")
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
+                       </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <input type="checkbox" class="form-check-input" name="is_default">
+                            <label >Default</label>
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="form-group">
-                            <label>Repeat Password</label>
-                            <input type="password" class="form-control" name="password2" >
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group">
-                            <label >Permission</label>
-                            <select name="is_admin">
-                                <option value="0">Users</option>
-                                <option value="1">Admin</option>
-                            </select>
+                        <div class="form-group mt-4">
+                            <label>Address</label>
+                            <textarea  class="form-control" name="address" cols="20" rows="5">Address</textarea>
+                            @error("address")
+                            <span class="text-danger">{{$message}}</span>
+                            @enderror
                         </div>
                     </div>
                     <div class="row">

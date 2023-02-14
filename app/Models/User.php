@@ -18,6 +18,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $primaryKey = "id";
+
     protected $fillable = [
         'name',
         'email',
@@ -46,7 +49,6 @@ class User extends Authenticatable
     ];
     public function addrs()
     {
-        return $this->hasMany(Address::class, "id", "user_id");
-
+        return $this->hasMany(Address::class, "user_id", "id");
     }
 }

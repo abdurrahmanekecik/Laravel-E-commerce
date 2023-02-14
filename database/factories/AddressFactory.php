@@ -18,12 +18,12 @@ class AddressFactory extends Factory
     public function definition()
     {
         return [
-            'id' => '2',
+            'user_id' => '1',
             'city' => fake()->city(),
-            'district' => fake()->streetAddress(),
+            'district' => fake()->text(),
             'zipcode' => fake()->postcode(),
             'address' => fake()->address(), // password
-            'is_default' => fake()->boolean,
+            'is_default' => 1,
         ];
     }
 }
