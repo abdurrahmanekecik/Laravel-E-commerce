@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AddressRequest;
 use App\Models\Address;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,8 +18,8 @@ class AddressController extends Controller
      */
     public function index(User $user)
 
-    { $users = User::all();
-        return view('backend.address.index' , compact('users'));
+    { $addrs = $user->addrs;
+        return view('backend.address.index' , compact('addrs'));
 
     }
 
@@ -27,9 +28,9 @@ class AddressController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('backend.address.create');
+    public function create(User $user)
+    { $addrs = $user->addrs;
+        return view('backend.address.create', compact('addrs') );
     }
 
     /**
@@ -38,9 +39,13 @@ class AddressController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(User $user, AddressRequest $request)
     {
-       //
+       $addr = new Address();
+       $data = $this->prepare($request, $addr->getFillable());
+       $addr->fill($data);
+       $addr->save();
+        return redirect('/users');
     }
 
     /**
@@ -60,9 +65,9 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user, Address $address)
     {
-        //
+        return view("backend.address.edit", ["user"=>$user, "addr"=>$address] );
     }
 
     /**
@@ -72,9 +77,13 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(User $user, Address $address, AddressRequest $request)
     {
-        //
+        $data=$this->prepare($request, $address->getfillable());
+        $address->fill($data);
+        $address->save();
+        return redirect('/users');
+
     }
 
     /**
@@ -83,8 +92,10 @@ class AddressController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Address $address)
     {
-        //
+        $address->delete();
+        return response()->json(["message"=>"Done","id"=>$address->address_id]);
+
     }
 }

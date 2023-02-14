@@ -10,7 +10,7 @@
             <h2>Address</h2>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <a href="{{ route('users.create') }}" class="btn btn-sm btn-outline-danger">New Adds</a>
+                    <a href="{{ route('address.create') }}" class="btn btn-sm btn-outline-danger">New Adds</a>
                 </div>
             </div>
 
@@ -27,7 +27,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if(count($users)>0)
+                    @if(count($addrs)>0)
                     @foreach($users as $user)
                     <tr>
                         <td>{{ $user->id; }}</td>

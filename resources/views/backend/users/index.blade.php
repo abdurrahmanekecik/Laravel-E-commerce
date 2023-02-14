@@ -59,6 +59,13 @@
                                     </a>
 
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{url("/users/$user->id/address")}}" class="nav-link">
+                                        <span>Address</span>
+                                    </a>
+
+                                </li>
+
 
                             </ul>
 
