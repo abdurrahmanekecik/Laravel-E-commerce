@@ -91,12 +91,22 @@
                             Dashboard
                         </a>
                     </li>
-
-
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{url("/users")}}">
                             <span data-feather="file" class="align-text-bottom"></span>
                             Users
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url("/categories")}}">
+                            <span data-feather="file" class="align-text-bottom"></span>
+                            Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url("/products")}}">
+                            <span data-feather="file" class="align-text-bottom"></span>
+                            Products
                         </a>
                     </li>
 
