@@ -10,7 +10,7 @@
 
 
 
-        <form method="POST" action="{{url("/categories/$category->category_id")}}">
+        <form method="POST" action="{{url("/categories/$category->id")}}">
             @csrf
             @method('PUT')
                 <div class="row">

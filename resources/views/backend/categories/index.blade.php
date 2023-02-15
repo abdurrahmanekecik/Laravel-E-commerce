@@ -50,13 +50,13 @@
                             <ul class="nav float-start">
 
                                 <li class="nav-item">
-                                    <a href="{{ url("categories/$category->category_id/edit") }}">
+                                    <a href="{{ url("categories/$category->id/edit") }}">
                                         <button class="btn btn-warning">Edit</button>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
-                                   <form method="POST" action="{{ route('categories.destroy', $category->category_id) }}">
+                                   <form method="POST" action="{{ route('categories.destroy', $category->id) }}">
                                        @method('DELETE')
                                        @csrf
                                        <button class="btn btn-danger" type="submit">Delete</button>

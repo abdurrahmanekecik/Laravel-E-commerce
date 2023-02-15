@@ -3,9 +3,6 @@
 namespace Tests\Feature\Http\Controllers\Backend;
 use App\Models\Category;
 use Faker\Generator;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Mockery\Container;
 use Tests\TestCase;
 
 class UserControllerTest extends TestCase
@@ -68,7 +65,7 @@ class UserControllerTest extends TestCase
 
     public function test_categories_latest_categories_is_deleted(){
         $categories = Category::all()->last();
-        $id = $categories->category_id;
+        $id = $categories->id;
         $response = $this->delete("/categories/" . $id);
         $response->assertRedirect("/categories");
     }
