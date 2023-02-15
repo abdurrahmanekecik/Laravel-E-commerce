@@ -20,47 +20,31 @@
                 <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label >City</label>
-                        <input type="text" class="form-control" name="city" placeholder="City">
-                        @error("city")
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
+                        <x-input label="City" placeholder="City Enter" field="city"/>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label >District</label>
-                        <input type="text" class="form-control"  name="district" placeholder="District" value="{{old("district")}}">
-                        @error("district")
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                    </div>
+                        <x-input label="Disctrict" placeholder="Disctrict Enter" field="disctrict"/>
                 </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label >Zipcode</label>
-                            <input type="text" class="form-control" name="zipcode">
-                            @error("zipcode")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <x-input label="Zipcode" placeholder="Zipcode Enter" field="zipcode"/>
                        </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <input type="checkbox" class="form-check-input" name="is_default">
-                            <label >Default</label>
+                            <x-checkbox label="Default" field="is_dafault"/>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group mt-4">
-                            <label>Address</label>
-                            <textarea  class="form-control" name="address" cols="20" rows="5">Address</textarea>
-                            @error("address")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <x-textarea label="Address" field="address" placeholder="Address Enter" />
+
+
                         </div>
                     </div>
                     <div class="row">
