@@ -5,6 +5,7 @@ use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\AddressController;
 use App\Http\Controllers\Backend\CategoryController;
 use App\Http\Controllers\Backend\ProductController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,4 +27,4 @@ Route::post('/users/{user}/change-password',[UserController::class, 'changePassw
 Route::resource('/users/{user}/address',AddressController::class);
 Route::resource('/categories',CategoryController::class);
 Route::resource('/products',ProductController::class);
-
+Route::resource('/products/{product}/images',ProductController::class);
