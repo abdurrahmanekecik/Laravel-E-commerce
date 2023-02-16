@@ -8,4 +8,3 @@
 @error("$field")
 <span class="text-danger">{{$message}}</span>
 @enderror
-en son checkboxın otomatik gelmemesine bakıyorduk. githubda kodları incele

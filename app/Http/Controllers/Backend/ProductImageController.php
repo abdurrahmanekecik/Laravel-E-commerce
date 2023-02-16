@@ -19,7 +19,7 @@ class ProductImageController extends Controller
 
     {
         $images = $product->images;
-        return view('backend.products.index' , compact('images'));
+        return view('backend.images.index' , compact('images', 'product'));
 
     }
 
@@ -30,7 +30,7 @@ class ProductImageController extends Controller
      */
     public function create(Product $product)
     { $images = $product->images;
-        return view('backend.products.create', compact('images', 'user'));
+        return view('backend.images.create', compact('images', 'product'));
     }
 
     /**
@@ -42,12 +42,18 @@ class ProductImageController extends Controller
     public function store(ProductImage $productImage, Request $request)
     {
 
+
         $productImage= new ProductImage();
         $productImage->product_id = $request->product_id;
         $productImage->alt = $request->alt;
-        $productImage->alt	 = $request->alt;
         $productImage->seq = $request->seq;
         $productImage->active = $request->active ?? 1;
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= $file->getClientOriginalName();
+            $file-> move(public_path('data'), $filename);
+        }
+        $productImage->url = $filename;
         $productImage->save();
         return redirect('/products');
     }
@@ -69,9 +75,9 @@ class ProductImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product, ProductImage $products)
+    public function edit(Product $product, ProductImage $productImage)
     {
-        return view("backend.images.edit", ["user"=>$product, "images"=>$products] );
+        return view("backend.images.edit", ["product"=>$product, "image"=>$productImage] );
     }
 
     /**
@@ -81,15 +87,21 @@ class ProductImageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Product $product, ProductImage $productimages, Request $request)
+    public function update(Product $product, ProductImage $productImage, Request $request)
     {
-        $product = ProductImage::find($productimages->id);
-        $product->product_id = $request->product_id;
-        $product->alt = $request->alt;
-        $product->alt	 = $request->alt;
-        $product->seq = $request->seq;
-        $product->active = $request->active ?? 1;
-        $product->save();
+        $productImage = ProductImage::find($productImage->id);
+        $productImage->product_id = $request->product_id;
+        $productImage->alt = $request->alt;
+        $productImage->alt	 = $request->alt;
+        $productImage->seq = $request->seq;
+        $productImage->active = $request->active ?? 1;
+        if($request->file('image')){
+            $file= $request->file('image');
+            $filename= $file->getClientOriginalName();
+            $file-> move(public_path('data'), $filename);
+        }
+        $productImage->url = $filename;
+        $productImage->save();
         return redirect('/products');
 
     }
