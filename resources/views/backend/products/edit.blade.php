@@ -1,65 +1,72 @@
 @extends('backend.app')
-@section('tittle', 'Address Edit')
+@section('tittle', 'Product Edit')
 @section('content')
 
     <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Admin Panel</h1>
         </div>
-        <h2>Address Edit</h2>
+        <h2>Product Edit</h2>
 
 
 
-        <form method="POST" action="{{url("/categories/$category->id")}}">
+        <form method="POST" action="{{url("/products/$product->id")}}">
             @csrf
             @method('PUT')
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label >City</label>
-                            <input type="text" class="form-control" name="city" placeholder="City" value="{{ $addr->city }}">
-                            @error("city")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <x-input label="Name" placeholder="Name Enter" field="name"  value="{{ $product->name }}"/>
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label >District</label>
-                            <input type="text" class="form-control"  name="district" placeholder="District"  value="{{ $addr->district}}">
-                            @error("district")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <label>Category</label>
+                            <select name="category_id" class="form-control">
+                                @foreach($categories as $category)
+
+                                    <option value="{{$category->id}}" {{$product->category_id == $category->id ? "selected" : ""}}>{{$category->name}}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label >Zipcode</label>
-                            <input type="text" class="form-control" name="zipcode" value="{{ $addr->zipcode }}">
-                            @error("zipcode")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
+                            <x-input label="Old Price" placeholder="Old Price Enter" field="old_price" value="{{ $product->old_price }}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <x-input label="Price" placeholder="Price Enter" field="price" value="{{ $product->price }}"/>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-lg-6">
+                        <div class="form-group mt-4">
+                            <x-textarea label="Lead" placeholder="Lead Enter" field="lead" value="{{ $product->lead }}"/>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div class="form-group mt-4">
+                            <x-textarea label="Description" placeholder="Description Enter" field="description" value="{{ $product->description }}"/>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <x-input label="Slug" placeholder="Slug Enter" field="slug" value="{{ $product->slug }}"/>
                         </div>
                     </div>
 
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <input type="checkbox" class="form-check-input" name="is_default" value="1" {{$user->is_default ==1 ? "checked" : "" }}>
-                            <label >Default</label>
 
+                            <x-checkbox label="Active" field="is_active"  value="{{ $product->is_active }}"/>
 
-
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="form-group mt-4">
-                            <label>Address</label>
-                            <textarea  class="form-control" name="address" cols="20" rows="5">{{ $addr->address }}</textarea>
-                            @error("address")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
                         </div>
                     </div>
                     <div class="row">

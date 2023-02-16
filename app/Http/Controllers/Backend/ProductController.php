@@ -70,10 +70,11 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category, $id)
+    public function edit($id)
     {
-       $products = Product::find($id);
-        return view('backend.products.edit', compact('products', 'category'));
+       $product = Product::find($id);
+       $categories = Category::all();
+        return view('backend.products.edit', compact('product', 'categories'));
     }
 
     /**

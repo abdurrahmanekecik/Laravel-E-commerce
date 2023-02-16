@@ -5,7 +5,7 @@ use App\Models\Product;
 use Faker\Generator;
 use Tests\TestCase;
 
-class UserControllerTest extends TestCase
+class ProductControllerTest extends TestCase
 {
     /**
      * A basic feature test example.
