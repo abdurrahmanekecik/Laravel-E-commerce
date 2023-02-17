@@ -73,44 +73,85 @@
 <div class="container">
 
     <div class="row">
-        <div class="col-sm-12">
-
-            <strong>Main Menu</strong>
+        <div class="row">
+            <div class="col-sm-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="/">PROJE</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                                </li>
+                                @auth()
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/addtocart">Cart</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/logout">Logout</a>
+                                    </li>
+                                @else
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/login">Log-in</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/register">Register</a>
+                                    </li>
+                                @endauth
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
         </div>
-
 
     </div>
     <div class="row">
 
-        <div class="col-sm-3">
-            <strong>Categories</strong>
-
-            <ul>
+        <div class="col-sm-3 pt-4">
+            <h5>Categories</h5>
+            <div class="list-group">
                 @if(count($categories)>0)
-
-
                 @foreach($categories as $category)
-
-
-                        <li><a href="{{$category->slug;}}">{{$category->name;}}</a></li>
+                        <a class="list-group-item list-group-item-action" href="{{$category->slug}}">{{$category->name}}</a>
                     @endforeach
                 @endif
-            </ul>
+        </div>
         </div>
 
-        <div class="col-sm-9">
+        <div class="col-sm-9 pt-4">
 
-            <strong>Products</strong>
+            <h5>Products</h5>
             <ul>
                 @if(count($products)>0)
+                    <div class="card-group">
 
 
                     @foreach($products as $product)
 
 
-                        <li><a href="{{$product->slug;}}">{{$product->name;}}</a></li>
+                        <div class="card" style="width: 18rem;">
+                            @if( isset($product->images[0]))
+
+                            <img src="{{asset("data/".$product->images[0]->url)}}"
+                                 class="card-img-top" alt="{{$product->images[0]->alt}}">
+                            @endif
+                                <div class="card-body">
+                                <h5 class="card-title">{{$product->name}}</h5>
+                                <h6 class="card-title">Price: {{$product->price}}TL</h6>
+                                <p class="card-text">{{$product->lead}}</p>
+                                <a href="/cart/add/{{$product->id}}" class="btn btn-primary">Add to Cart</a>
+                            </div>
+                        </div>
+
+
                     @endforeach
                 @endif
+                    </div>
             </ul>
 
 
