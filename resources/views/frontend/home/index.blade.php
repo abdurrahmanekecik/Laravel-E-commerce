@@ -77,7 +77,7 @@
             <div class="col-sm-12">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="/">PROJE</a>
+                        <a class="navbar-brand" href="/">E-Commerce</a>
                         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
@@ -115,9 +115,10 @@
         <div class="col-sm-3 pt-4">
             <h5>Categories</h5>
             <div class="list-group">
+                <a href="/"  class="list-group-item list-group-item-action">All</a>
                 @if(count($categories)>0)
                 @foreach($categories as $category)
-                        <a class="list-group-item list-group-item-action" href="{{$category->slug}}">{{$category->name}}</a>
+                        <a class="list-group-item list-group-item-action" href="{{url("category/")}}/{{$category->slug}}">{{$category->name}}</a>
                     @endforeach
                 @endif
         </div>
