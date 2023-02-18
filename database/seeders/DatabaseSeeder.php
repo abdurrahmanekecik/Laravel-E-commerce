@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
              'name' => 'Abdurrahman Ekecik',
              'email' => 'info@abdurrahamnekecik.com',
              'password' => bcrypt('123456'),
-             'admin' => '1',
-             'active' => '1',
+             'is_admin' => '1',
+             'status' => '1',
         ]);
     }
 }
