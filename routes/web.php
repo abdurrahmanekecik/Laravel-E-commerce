@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\ProductImageController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\CartController;
+use App\Http\Controllers\Frontend\CheckoutController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +37,10 @@ Route::resource('/products/{product}/images',ProductImageController::class);
     Route::get("/addtocart", [CartController::class, 'index']);
     Route::get("/addtocart/add/{product}", [CartController::class, 'add']);
     Route::get("/addtocart/remove/{cartDetails}", [CartController::class, 'remove']);
+
+    Route::get("/checkout", [CheckoutController::class, 'index']);
+    Route::post("/checkout", [CheckoutController::class, 'checkout']);
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

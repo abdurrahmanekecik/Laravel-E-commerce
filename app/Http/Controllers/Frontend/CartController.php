@@ -29,7 +29,7 @@ class CartController extends Controller
      *
      * @return Cart
      */
-    private function getOrCreateCart(): Cart
+    public function getOrCreateCart(): Cart
     {
         $user = Auth::user();
         $cart = Cart::firstOrCreate(

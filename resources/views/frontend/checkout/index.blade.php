@@ -110,58 +110,44 @@
         </div>
 
     </div>
+<div class="container">
     <div class="row">
-        <div class="col-sm-3 pt-4">
-            <h5>Account</h5>
-            <div class="list-group">
-                <a href="/" class="list-group-item list-group-item-action">Cart</a>
-            </div>
-        </div>
-        <div class="col-sm-9 pt-4">
-            <h5>Cart</h5>
-            @if(count($cart->details) > 0)
-                <table class="table">
-                    <thead>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Process</th>
-                    </thead>
-                    <tbody>
-                   -
-                    @foreach($cart->details as $detail)
+        <div class="col-4 offset-4">
+            <main class="mt-5">
+                <form method="POST" action="{{url("/checkout")}}">
+                    @csrf
+                    <h1 class="h3 mb-3 fw-normal">Kredi Kartı Bilgileri</h1>
 
-                        @foreach($products as $product)
+                    <div class="form-group mt-2">
+                        <x-input label="Name Surname" placeholder="Cart Name Surname" field="name"/>
+                    </div>
 
-                            @if($product->id == $detail->product_id)
+                    <div class="form-group mt-2">
+                        <x-input label="Cart No" placeholder="Enter your 16 digit card number" field="cart_no"/>
+                    </div>
 
-                        <tr>
-                            <td>
-                                @if(isset($product->images[0]))
-                                <img src="{{asset("/data/products/".$product->images[0]->url)}}"
-                                     alt="{{$product->images[0]->alt}}" width="100">
-                                @endif
-                            </td>
+                    <div class="form-group mt-2">
+                        <x-input label="Month of End Use" placeholder="Enter the last month of use" field="expire_month"
+                                 type="number"/>
+                    </div>
 
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $detail->quantity }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>
-                                <a href="/addtocart/remove/{{$detail->id}}">Cart Remove</a>
-                            </td>
-                        </tr>
-                            @endif
-                        @endforeach
-                    @endforeach
-                    </tbody>
-                </table>
-                <a href="/checkout" class="btn btn-success float-end">Buy Now</a>
-            @else
-                <p class="text-danger text-center">Not Found.</p>
-            @endif
+                    <div class="form-group mt-2">
+                        <x-input label="Year of Last Use" placeholder="Enter the last year of use" field="expire_year"
+                                 type="number"/>
+                    </div>
+
+                    <div class="form-group mt-2">
+                        <x-input label="Cvc" placeholder="Enter the cvc code" field="cvc" type="number"/>
+                    </div>
+
+                    <button class="w-100 btn btn-lg btn-success mt-4" type="submit">Satın Al</button>
+                </form>
+            </main>
         </div>
     </div>
 </div>
 </body>
+<script src="{{asset("build/assets/app.js")}}"></script>
+<script src="{{asset("build/assets/bootstrap.js")}}"></script>
 </html>
+
