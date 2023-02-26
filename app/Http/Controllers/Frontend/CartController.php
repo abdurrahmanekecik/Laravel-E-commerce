@@ -32,8 +32,9 @@ class CartController extends Controller
     public function getOrCreateCart(): Cart
     {
         $user = Auth::user();
+
         $cart = Cart::firstOrCreate(
-            ['user_id' => $user->id],
+            ['user_id' => $user->user_id],
             ['code' => Str::random(8)]
         );
         return $cart;
@@ -49,8 +50,9 @@ class CartController extends Controller
     public function add(Product $product, int $quantity = 1): RedirectResponse
     {
         $cart = $this->getOrCreateCart();
+
         $cart->details()->create([
-            "product_id" => $product->id,
+            "product_id" => $product->product_id,
             "quantity" => $quantity,
         ]);
 
@@ -66,6 +68,7 @@ class CartController extends Controller
      */
     public function remove(CartDetails $cartDetails): RedirectResponse
     {
+
         $cartDetails->delete();
         return redirect("/addtocart");
     }

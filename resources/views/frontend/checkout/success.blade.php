@@ -110,58 +110,17 @@
         </div>
 
     </div>
-    <div class="row">
-        <div class="col-sm-3 pt-4">
-            <h5>Account</h5>
-            <div class="list-group">
-                <a href="/" class="list-group-item list-group-item-action">Cart</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-4 offset-4">
+                <main class="mt-5">
+                    Your pay transaction is successful.
+                </main>
             </div>
         </div>
-        <div class="col-sm-9 pt-4">
-            <h5>Cart</h5>
-            @if(count($cart->details) > 0)
-                <table class="table">
-                    <thead>
-                    <th>Image</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Process</th>
-                    </thead>
-                    <tbody>
-                   -
-                    @foreach($cart->details as $detail)
-
-                        @foreach($products as $product)
-
-                            @if($product->product_id == $detail->product_id)
-
-                        <tr>
-                            <td>
-                                @if(isset($product->images[0]))
-                                <img src="{{asset("/data/products/".$product->images[0]->url)}}"
-                                     alt="{{$product->images[0]->alt}}" width="100">
-                                @endif
-                            </td>
-
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $detail->quantity }}</td>
-                            <td>{{ $product->price }}</td>
-                            <td>
-                                <a href="/addtocart/remove/{{$detail->cart_detail_id}}">Cart Remove</a>
-                            </td>
-                        </tr>
-                            @endif
-                        @endforeach
-                    @endforeach
-                    </tbody>
-                </table>
-                <a href="/checkout" class="btn btn-success float-end">Buy Now</a>
-            @else
-                <p class="text-danger text-center">Not Found.</p>
-            @endif
-        </div>
     </div>
-</div>
 </body>
+<script src="{{asset("build/assets/app.js")}}"></script>
+<script src="{{asset("build/assets/bootstrap.js")}}"></script>
 </html>
+

@@ -10,9 +10,9 @@ class Category extends Model
 {
     use HasFactory, SoftDeletes;
 
-
+    protected $primaryKey = "category_id";
     public function products()
     {
-    return $this->hasMany(Product::class,"id","id");
+    return $this->hasMany(Product::class,"id","product_id");
     }
 }

@@ -10,7 +10,7 @@ class Address extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
+    protected $primaryKey = "address_id";
     protected $table = 'address';
 
 }

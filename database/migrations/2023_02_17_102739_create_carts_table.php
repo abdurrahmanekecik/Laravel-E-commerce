@@ -14,9 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('carts', function (Blueprint $table) {
-            $table->id();
+            $table->id("cart_id");
             $table->foreignIdFor(User::class,"user_id");
             $table->string("code");
+            $table->boolean("is_active")->default("1");
             $table->softDeletes();
             $table->timestamps();
         });

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->id();
+            $table->id("invoice_id");
             $table->foreignIdFor(Order::class,"order_id");
             $table->string("code");
             $table->softDeletes();

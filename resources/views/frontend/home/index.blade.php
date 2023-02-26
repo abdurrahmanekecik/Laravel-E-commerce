@@ -145,7 +145,7 @@
                                 <h5 class="card-title">{{$product->name}}</h5>
                                 <h6 class="card-title">Price: {{$product->price}}TL</h6>
                                 <p class="card-text">{{$product->lead}}</p>
-                                <a href="/addtocart/add/{{$product->id}}" class="btn btn-primary">Add to Cart</a>
+                                <a href="/addtocart/add/{{$product->product_id}}" class="btn btn-primary">Add to Cart</a>
                             </div>
                         </div>
 

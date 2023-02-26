@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Invoice;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -37,14 +39,21 @@ class CheckoutController extends Controller
        $expire_year=$request->expire_year;
        $cvc=$request->cvc;
        $user = Auth::user();
+
+       foreach ($user->addrs as $item) {
+           if ($item->is_default == 1) {
+               $address= $item->address;
+               $city = $item->city;
+               $zipcode = $item->zipcode;
+               break;
+
+           }
+       }
+
        $code = $this->getOrCreateCart()->code;
        $total= $this->calculateCartTotal();
-       if ($user->addrs[0]->is_default == 1){
-        $address  = $user->addrs[0]->address;
-        $city = $user->addrs[0]->city;
-        $zipcode = $user->addrs[0]->zipcode;
 
-       }
+
 
 
        $options = new Options();
@@ -75,7 +84,7 @@ class CheckoutController extends Controller
 
        $buyer = new Buyer();
 
-       $buyer->setId($user->id);
+       $buyer->setId($user->user_id);
        $buyer->setName($user->name);
        $buyer->setSurname($user->name);
        $buyer->setGsmNumber($user->tel);
@@ -101,73 +110,74 @@ class CheckoutController extends Controller
 
        $request->setBuyer($buyer);
        $shippingAddress = new \Iyzipay\Model\Address();
-       $shippingAddress->setContactName("Jane Doe");
-       $shippingAddress->setCity("Istanbul");
+       $shippingAddress->setContactName($name);
+       $shippingAddress->setCity($city);
        $shippingAddress->setCountry("Turkey");
-       $shippingAddress->setAddress("Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1");
-       $shippingAddress->setZipCode("34742");
+       $shippingAddress->setAddress($address);
+       $shippingAddress->setZipCode($zipcode);
        $request->setShippingAddress($shippingAddress);
 
-
-
-       $basketItems = array();
-       $firstBasketItem = new \Iyzipay\Model\BasketItem();
-       $firstBasketItem->setId("BI101");
-       $firstBasketItem->setName("Binocular");
-       $firstBasketItem->setCategory1("Collectibles");
-       $firstBasketItem->setCategory2("Accessories");
-       $firstBasketItem->setItemType(\Iyzipay\Model\BasketItemType::PHYSICAL);
-       $firstBasketItem->setPrice("11.0");
-       $basketItems[0] = $firstBasketItem;
-
-       $secondBasketItem = new \Iyzipay\Model\BasketItem();
-       $secondBasketItem->setId("BI102");
-       $secondBasketItem->setName("Game code");
-       $secondBasketItem->setCategory1("Game");
-       $secondBasketItem->setCategory2("Online Game Items");
-       $secondBasketItem->setItemType(\Iyzipay\Model\BasketItemType::VIRTUAL);
-       $secondBasketItem->setPrice("0.9");
-
-       $basketItems[1] = $secondBasketItem;
-       $thirdBasketItem = new \Iyzipay\Model\BasketItem();
-       $thirdBasketItem->setId("BI103");
-       $thirdBasketItem->setName("Usb");
-       $thirdBasketItem->setCategory1("Electronics");
-       $thirdBasketItem->setCategory2("Usb / Cable");
-       $thirdBasketItem->setItemType(\Iyzipay\Model\BasketItemType::PHYSICAL);
-       $thirdBasketItem->setPrice("0.1");
-       $basketItems[2] = $thirdBasketItem;
+       $basketItems = $this->getBasketItems();
        $request->setBasketItems($basketItems);
 
 
-       $payment = Payment::create($request, $options);
+      $payment = Payment::create($request, $options);
        if ($payment->getStatus() == "success"){
 
-           dd("ödeme ok");
-           dd($payment->getErrorMessage());
+           $cart = $this->getOrCreateCart();
+           $cart->is_active = false;
+           $cart->save();
+
+           $order = new Order([
+               "cart_id"=> $cart->cart_id,
+               "code"=>$cart->code
+           ]);
+           $order->save();
+
+           foreach ($cart->details as $detail) {
+               $order->details()->create([
+                   'order_id' => $order->order_id,
+                   'product_id' => $detail->product_id,
+                   'quantity' => $detail->quantity
+               ]);
+           }
+
+           $invoice = new Invoice([
+               'order_id' => $order->order_id,
+               'code' => $order->code,
+           ]);
+           $invoice->save();
+
+
+           foreach ($order->details as $detail) {
+               $invoice->details()->create([
+                   'product_id' => $detail->product_id,
+                   'quantity' => $detail->quantity,
+                   'unit_price' => $detail->product->price,
+                   'total' => ($detail->quantity * $detail->product->price),
+               ]);
+           }
+            return view("frontend.checkout.success");
+       } else{
+           $error = $payment->getErrorMessage();
+          return view("frontend.checkout.error", compact('error'));
+
        }
-       else{
-           dd($payment->getErrorMessage());
-       }
+
 
 
    }
 
     private function calculateCartTotal(): float
     {
-        $products= Product::all();
         $total = 0;
         $cart = $this->getOrCreateCart();
         $cartDetails = $cart->details;
-        foreach ($products as $product){
         foreach ($cartDetails as $detail) {
-            if ($product->id == $detail->product_id){
-            $total += $product->price * $detail->quantity;
+            $total += $detail->product->price * $detail->quantity;
         }
-        }
-        }
-
         return $total;
+
     }
 
     /**
@@ -180,40 +190,30 @@ class CheckoutController extends Controller
     {
         $user = Auth::user();
         $cart = Cart::firstOrCreate(
-            ['user_id' => $user->id],
+            ['user_id' => $user->user_id],
             ['code' => Str::random(8)]
         );
         return $cart;
     }
 
 
-    private function getBasketItems(): array
-    { $products= Product::all();
-        $categories= Category::all();
+    private function getBasketItems()
+    {
         $basketItems = array();
         $cart = $this->getOrCreateCart();
         $cartDetails = $cart->details;
-        foreach ($categories as $category){
-            foreach ($products as $product){
-                foreach ($cartDetails as $detail) {
-                    if ($category->id == $product->category_id){
-                    if ($product->id == $detail->product_id){
+        foreach ($cartDetails as $detail) {
+            $item = new BasketItem();
+            $item->setId($detail->product_id);
+            $item->setName($detail->product->name);
+            $item->setCategory1($detail->product->category->name);
+            $item->setItemType(BasketItemType::PHYSICAL);
+            $item->setPrice($detail->product->price);
 
-                        $item = new BasketItem();
-                        $item->setId($detail->product_id);
-                        $item->setName($product->name);
-                        $item->setCategory1($category->name);
-                        } break;
-                        $item->setItemType(BasketItemType::PHYSICAL);
-                        $item->setPrice($product->price);
-
-                        for ($i = 0; $i < $detail->quantity; $i++) {
-                            array_push($basketItems, $item);
-                        } berak; }
-                }
+            for ($i = 0; $i < $detail->quantity; $i++) {
+                array_push($basketItems, $item);
             }
         }
-
 
         return $basketItems;
     }

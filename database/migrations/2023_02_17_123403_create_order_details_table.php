@@ -16,7 +16,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('order_details', function (Blueprint $table) {
-            $table->id();
+            $table->id("order_detail_id");
             $table->foreignIdFor(Order::class, "order_id");
             $table->foreignIdFor(Product::class,"product_id");
             $table->integer("quantity");

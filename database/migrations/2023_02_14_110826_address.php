@@ -15,7 +15,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('address', function (Blueprint $table) {
-            $table->id();
+            $table->id("address_id");
             $table->foreignIdFor(User::class, "user_id");
             $table->string("city");
             $table->string("district");
