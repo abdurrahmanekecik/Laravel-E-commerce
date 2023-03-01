@@ -27,7 +27,7 @@ Route::get('/',[HomeController::class, 'index']);
 Route::get('/category/{category:slug}', [\App\Http\Controllers\Frontend\CategoryController::class, 'index']);
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/dashboard',[HomeController::class, 'dashboard']);
     Route::resource('/users',UserController::class);
 Route::get('/users/{user}/change-password',[UserController::class, 'passwordForm']);
