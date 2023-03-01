@@ -10,7 +10,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
-use App\Http\Middleware\Language;
+use App\Http\Controllers\LoginController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,6 +53,14 @@ Route::get('/welcome', [HomeController::class, 'welcome']);
 Route::prefix('{locale?}')->middleware('language')->group(function () {
     Route::get('/welcome', [HomeController::class, 'welcome']);
 });
+
+
+
+Route::get('/redirect', [LoginController::class, 'redirect']);
+Route::get('/callback', [LoginController::class, 'callback']);
+
+
+
 
 require __DIR__.'/auth.php';
 
