@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Frontend\CartController;
 use App\Http\Controllers\Frontend\CheckoutController;
+use App\Http\Middleware\Language;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,13 +22,14 @@ use App\Http\Controllers\Frontend\CheckoutController;
 |
 */
 
+
 Route::get('/',[HomeController::class, 'index']);
 Route::get('/category/{category:slug}', [\App\Http\Controllers\Frontend\CategoryController::class, 'index']);
 
 
 Route::middleware('auth')->group(function () {
 Route::get('/dashboard',[HomeController::class, 'dashboard']);
-Route::resource('/users',UserController::class);
+    Route::resource('/users',UserController::class);
 Route::get('/users/{user}/change-password',[UserController::class, 'passwordForm']);
 Route::post('/users/{user}/change-password',[UserController::class, 'changePassword']);
 Route::resource('/users/{user}/address',AddressController::class);
@@ -44,6 +46,12 @@ Route::resource('/products/{product}/images',ProductImageController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+Route::get('/welcome', [HomeController::class, 'welcome']);
+
+
+Route::prefix('{locale?}')->middleware('language')->group(function () {
+    Route::get('/welcome', [HomeController::class, 'welcome']);
 });
 
 require __DIR__.'/auth.php';

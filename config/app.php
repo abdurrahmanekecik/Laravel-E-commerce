@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Facade;
 
 return [
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -41,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool) env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------

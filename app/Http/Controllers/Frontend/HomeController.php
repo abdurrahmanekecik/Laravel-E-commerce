@@ -13,6 +13,7 @@ class HomeController extends Controller
         $categories= Category::all()->where("is_active", true);
         $products= Product::all()->where("is_active", true);
 
+
         return view("frontend.home.index", compact('categories', 'products'));
 
 
@@ -20,5 +21,9 @@ class HomeController extends Controller
 
     public function dashboard(){
         return view('dashboard');
+    }
+
+    public function welcome(){
+        return view('welcome');
     }
 }

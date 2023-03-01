@@ -36,7 +36,7 @@
 
 
                         @foreach($categories as $category)
-                        @if($product->category_id == $category->id)
+                        @if($product->category_id == $category->category_id)
                         <td>{{ $category->name; }}</td>
                         @endif
                         @endforeach
@@ -57,13 +57,13 @@
                             <ul class="nav float-start">
 
                                 <li class="nav-item">
-                                    <a href="{{ url("products/$product->id/edit") }}">
+                                    <a href="{{ url("products/$product->product_id/edit") }}">
                                         <button class="btn btn-warning">Edit</button>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
-                                   <form method="POST" action="{{ route('products.destroy', $product->id) }}">
+                                   <form method="POST" action="{{ route('products.destroy', $product->product_id) }}">
                                        @method('DELETE')
                                        @csrf
                                        <button class="btn btn-danger" type="submit">Delete</button>

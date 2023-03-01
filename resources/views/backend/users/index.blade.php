@@ -40,13 +40,13 @@
                             <ul class="nav float-start">
 
                                 <li class="nav-item">
-                                    <a href="{{ route('users.edit',$user->id) }}">
+                                    <a href="{{ route('users.edit',$user->user_id) }}">
                                         <button class="btn btn-warning">Edit</button>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
-                                   <form method="POST" action="{{ route('users.destroy', $user->id) }}">
+                                   <form method="POST" action="{{ route('users.destroy', $user->user_id) }}">
                                        @method('DELETE')
                                        @csrf
                                        <button class="btn btn-danger" type="submit">Delete</button>
@@ -54,13 +54,13 @@
 
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{url("/users/$user->id/change-password")}}" class="nav-link">
+                                    <a href="{{url("/users/$user->user_id/change-password")}}" class="nav-link">
                                         <span>Password Change</span>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
-                                    <a href="{{url("/users/$user->id/address")}}" class="nav-link">
+                                    <a href="{{url("/users/$user->user_id/address")}}" class="nav-link">
                                         <span>Address</span>
                                     </a>
 
