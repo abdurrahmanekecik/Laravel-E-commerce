@@ -7,10 +7,10 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">Admin Panel</h1>
             </div>
-            <h2>Address</h2>
+            <h2>Photos</h2>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <a href="{{ url("products/$product->id/images/create") }}" class="btn btn-sm btn-outline-danger">New Adds</a>
+                    <a href="{{ url("products/$product->product_id/images/create") }}" class="btn btn-sm btn-outline-danger">New Add</a>
                 </div>
             </div>
 
@@ -20,10 +20,10 @@
                     <thead>
                     <tr>
                         <th scope="col">İd</th>
-                        <th scope="col">City</th>
-                        <th scope="col">District</th>
-                        <th scope="col">Zipcode</th>
-                        <th scope="col">Address</th>
+                        <th scope="col">İmage</th>
+                        <th scope="col">Alt</th>
+                        <th scope="col">Sequence No</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Process</th>
                     </tr>
                     </thead>
@@ -31,39 +31,34 @@
 
 
                     @if(count($images)>0)
-                    @foreach($images as $addr)
+                    @foreach($images as $image)
 
 
                     <tr>
-                        <td>{{ $addr->id; }}</td>
-                        <td>{{ $addr->city; }}</td>
-                        <td>{{ $addr->district; }}</td>
-                        <td>{{ $addr->zipcode; }}</td>
-                        <td>{{ $addr->Address; }}</td>
-                        <td>@if ($addr->is_default=1)
+                        <td>{{ $image->id }}</td>
+                        <td><img src="{{ $image->url }}" style="width: 150px; height: 150px; "> </td>
+                        <td>{{ $image->alt }}</td>
+                        <td>{{ $image->seq }}</td>
+                        <td>@if ($image->status=1)
                                 <span class="badge bg-success">Active</span>
                             @else
                             <span class="badge bg-danger">Passive</span>
                             @endif
-
                         </td>
                         <td>
-
-
                             <ul class="nav float-start">
-
                                 <li class="nav-item">
-                                    <a href="{{ url("users/$user->id/address/$addr->id/edit") }}">
+                                    <a href="{{ url("products/$product->product_id/images/$image->image_id/edit") }}">
                                         <button class="btn btn-warning">Edit</button>
                                     </a>
 
                                 </li>
                                 <li class="nav-item">
-                                   <form method="POST" action="{{ url("users/$user->id/address/$addr->id/destroy") }}">
+                                   <form method="POST" action="{{ url("products/$product->product_id/images/$image->image_id/destroy") }}">
                                        @method('DELETE')
                                        @csrf
                                        <button class="btn btn-danger" type="submit">Delete</button>
-                                    </a></form>
+                                    </form>
 
                                 </li>
                             </ul>
@@ -85,13 +80,8 @@
                 </table>
             </div>
         </main>
-    </div>
-</div>
 
 
 @endsection
-@section('js')
-@endsection
-@section('css')
-@endsection
+
 

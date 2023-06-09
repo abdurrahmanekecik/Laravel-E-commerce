@@ -10,7 +10,7 @@
             <h2>Address</h2>
             <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group me-2">
-                    <a href="{{ url("users/$user->id/address/create") }}" class="btn btn-sm btn-outline-danger">New Adds</a>
+                    <a href="{{ url("users/$user->id/address/create") }}" class="btn btn-sm btn-outline-danger">New Add</a>
                 </div>
             </div>
 

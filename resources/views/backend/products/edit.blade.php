@@ -7,10 +7,7 @@
             <h1 class="h2">Admin Panel</h1>
         </div>
         <h2>Product Edit</h2>
-
-
-
-        <form method="POST" action="{{url("/products/$product->id")}}">
+        <form method="POST" action="{{ route('products.update', $product->product_id) }}">
             @csrf
             @method('PUT')
                 <div class="row">
@@ -21,11 +18,10 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label>Category</label>
+
                             <select name="category_id" class="form-control">
                                 @foreach($categories as $category)
-
-                                    <option value="{{$category->id}}" {{$product->category_id == $category->id ? "selected" : ""}}>{{$category->name}}</option>
+                                    <option value="{{$category->category_id}}" {{$product->category_id == $category->category_id ? "selected" : ""}}>{{$category->name}}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -76,18 +72,7 @@
                         </div>
                     </div>
                 </div>
-
-
             </form>
-
-
-
-
-
-
 @endsection
-@section('js')
-@endsection
-@section('css')
-@endsection
+
 

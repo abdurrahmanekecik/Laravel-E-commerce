@@ -10,9 +10,9 @@
 
 
 
-        <form action="{{url("/products/$product->id/images")}}" method="POST" autocomplete="off"  enctype="multipart/form-data">
+        <form action="{{url("/products/$product->product_id/images")}}" method="POST" autocomplete="off"  enctype="multipart/form-data">
                 @csrf
-            <input type="hidden" name="product_id" value="{{$product->id}}">
+            <input type="hidden" name="product_id" value="{{$product->product_id}}">
             @error("product_id")
             <span class="text-danger">{{$message}}</span>
             @enderror
@@ -56,9 +56,5 @@
 
 
 
-@endsection
-@section('js')
-@endsection
-@section('css')
 @endsection
 

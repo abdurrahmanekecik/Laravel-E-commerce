@@ -51,3 +51,5 @@ To view the list of uploaded products, visit http://127.0.0.1:8000/products/.
 
 Feel free to make any additional improvements or customize the instructions further based on your requirements.
 
+Do not forget to set Iyzico, Mail and Google socialite settings. You will make the adjustments by updating the relevant fields in the .env file.
+

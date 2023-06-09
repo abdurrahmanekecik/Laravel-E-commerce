@@ -44,6 +44,7 @@ class ProductImageController extends Controller
 
 
         $productImage= new ProductImage();
+
         $productImage->product_id = $request->product_id;
         $productImage->alt = $request->alt;
         $productImage->seq = $request->seq;
@@ -52,8 +53,12 @@ class ProductImageController extends Controller
             $file= $request->file('image');
             $filename= $file->getClientOriginalName();
             $file-> move(public_path('data'), $filename);
-        }
+
         $productImage->url = $filename;
+        }
+        else{
+            $productImage->url = null;
+        }
         $productImage->save();
         return redirect('/products');
     }
