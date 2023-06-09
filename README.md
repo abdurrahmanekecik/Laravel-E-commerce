@@ -17,21 +17,29 @@ Copy code
 ```php
 php artisan key:generate
 ```
-Run the database migrations:
 
+Run the database migrations:
 
 Copy code
 ```php
 php artisan migrate
 ```
+
 Seed the database with sample data:
 
 Copy code
 ```php
 php artisan db:seed
 ```
-Start the Laravel development server:
+Npm Installations:
 
+Copy code
+```php
+npm install
+npm run build
+```
+
+Start the Laravel development server:
 
 Copy code
 ```php
