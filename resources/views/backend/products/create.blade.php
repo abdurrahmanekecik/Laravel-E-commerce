@@ -23,7 +23,7 @@
                     <div class="form-group">
                         <label>Category</label>
                         <select class="form-control" name="category_id">
-                            <option value="-1">Seçiniz</option>
+                            <option value="">Seçiniz</option>
                             @foreach($categories as $category)
                                 <option value="{{$category->id}}">{{$category->name}}</option>
                             @endforeach

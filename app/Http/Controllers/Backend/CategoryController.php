@@ -66,7 +66,7 @@ class CategoryController extends Controller
     public function edit($id)
     {
         $category = Category::find($id);
-        return view('backend.categories.edit', compact('user'));
+        return view('backend.categories.edit', compact('category'));
     }
 
     /**
@@ -101,14 +101,6 @@ class CategoryController extends Controller
 
 
     }
-
-
-
-
-
-
-
-
 
 
 

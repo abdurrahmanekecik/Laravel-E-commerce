@@ -24,35 +24,29 @@ use App\Http\Controllers\LoginController;
 
 
 Route::get('/',[HomeController::class, 'index']);
+
 Route::get('/category/{category:slug}', [\App\Http\Controllers\Frontend\CategoryController::class, 'index']);
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-Route::get('/dashboard',[HomeController::class, 'dashboard']);
+    Route::get('/dashboard',[HomeController::class, 'dashboard'])->name('dashboard');
     Route::resource('/users',UserController::class);
-Route::get('/users/{user}/change-password',[UserController::class, 'passwordForm']);
-Route::post('/users/{user}/change-password',[UserController::class, 'changePassword']);
-Route::resource('/users/{user}/address',AddressController::class);
-Route::resource('/categories',CategoryController::class);
-Route::resource('/products',ProductController::class);
-Route::resource('/products/{product}/images',ProductImageController::class);
+    Route::get('/users/{user}/change-password',[UserController::class, 'passwordForm']);
+    Route::post('/users/{user}/change-password',[UserController::class, 'changePassword']);
+    Route::resource('/users/{user}/address',AddressController::class);
+    Route::resource('/categories',CategoryController::class);
+    Route::resource('/products',ProductController::class);
+    Route::resource('/products/{product}/images',ProductImageController::class);
     Route::get("/addtocart", [CartController::class, 'index']);
     Route::get("/addtocart/add/{product}", [CartController::class, 'add']);
     Route::get("/addtocart/remove/{cartDetails}", [CartController::class, 'remove']);
-
     Route::get("/checkout", [CheckoutController::class, 'index']);
     Route::post("/checkout", [CheckoutController::class, 'checkout']);
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 Route::get('/welcome', [HomeController::class, 'welcome']);
-
-
-Route::prefix('{locale?}')->middleware('language')->group(function () {
-    Route::get('/welcome', [HomeController::class, 'welcome']);
-});
 
 
 
